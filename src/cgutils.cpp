@@ -2428,8 +2428,7 @@ static void emit_setfield(jl_codectx_t &ctx,
         }
     }
     else {
-        // TODO: better error
-        emit_error(ctx, "type is immutable");
+        emit_error(ctx, "setfield! cannot change immutable struct");
     }
 }
 
