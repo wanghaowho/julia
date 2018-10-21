@@ -339,10 +339,6 @@ end
 end
 
 @testset "ID generation" begin
-    id1 = Base.CoreLogging.log_record_id(Main, "test.jl", 42, Info, ())
-    id2 = Base.CoreLogging.log_record_id(Main, "test.jl", 42, Info, ())
-    @test id1 == id2
-
     logs,_ = collect_test_logs() do
         for i in 1:2
             @info "test"
