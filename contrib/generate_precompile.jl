@@ -79,7 +79,7 @@ function generate_precompile_statements()
         repl_output_buffer = IOBuffer()
         @static if Sys.iswindows()
             # Fake being cygwin
-            pipename = """\\\\?\\pipe\\cygwin-$("0"^16)-pty10-abcdef"""
+            pipename = """\\\\?\\pipe\\cygwin-1$("0"^15)-pty10-abcdef"""
             server = listen(pipename)
             slave = connect(pipename)
             @assert ccall(:jl_ispty, Cint, (Ptr{Cvoid},), slave.handle) == 1
