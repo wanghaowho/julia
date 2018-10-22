@@ -147,8 +147,9 @@ for stdlib in STDLIB_DOCS
 end
 
 const render_pdf = "pdf" in ARGS
+const buildroot = get(ENV, "BUILDROOT", joinpath(@__DIR__, ".."))
 makedocs(
-    build     = joinpath(@__DIR__, "_build", (render_pdf ? "pdf" : "html"), "en"),
+    build     = joinpath(buildroot, "doc", "_build", (render_pdf ? "pdf" : "html"), "en"),
     modules   = [Base, Core, BuildSysImg, [Base.root_module(Base, stdlib.stdlib) for stdlib in STDLIB_DOCS]...],
     clean     = true,
     doctest   = ("doctest=fix" in ARGS) ? (:fix) : ("doctest=true" in ARGS) ? true : false,
@@ -171,7 +172,7 @@ makedocs(
 if "deploy" in ARGS && Sys.ARCH === :x86_64 && Sys.KERNEL === :Linux
     deploydocs(
         repo = "github.com/JuliaLang/julia.git",
-        target = "_build/html/en",
+        target = joinpath(buildroot, "doc", "_build", "html", "en"),
         dirname = "en",
         devurl = "v1.1-dev",
         versions = ["v#.#", "v1.1-dev" => "v1.1-dev"]
