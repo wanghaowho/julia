@@ -148,6 +148,11 @@ end
 
 const render_pdf = "pdf" in ARGS
 const buildroot = get(ENV, "BUILDROOT", joinpath(@__DIR__, ".."))
+
+@show haskey(ENV, "BUILDROOT")
+haskey(ENV, "BUILDROOT") && (@show ENV["BUILDROOT"])
+@show buildroot
+
 makedocs(
     build     = joinpath(buildroot, "doc", "_build", (render_pdf ? "pdf" : "html"), "en"),
     modules   = [Base, Core, BuildSysImg, [Base.root_module(Base, stdlib.stdlib) for stdlib in STDLIB_DOCS]...],
@@ -166,6 +171,8 @@ makedocs(
     html_canonical = ("deploy" in ARGS) ? "https://docs.julialang.org/en/v1/" : nothing,
     assets = ["assets/julia-manual.css", ]
 )
+
+@show readdir(joinpath(buildroot, "doc", "_build"))
 
 # Only deploy docs from 64bit Linux to avoid committing multiple versions of the same
 # docs from different workers.
